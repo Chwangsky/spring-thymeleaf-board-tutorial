@@ -8,7 +8,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class BoardSearchResponseDTO {
+public class BoardListResponseDTO {
     private int totalCount;
     private List<BoardDetailResponseItem> boardDetailResponseItems;
     private PaginationDTO paginationDto;

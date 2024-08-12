@@ -7,7 +7,7 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-public class BoardSearchRequestDTO {
+public class BoardListRequestDTO {
 
     private String regDateStart;
 

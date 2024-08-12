@@ -46,6 +46,8 @@
                     OR
                     b.content LIKE CONCAT('%', #{titleAndContentKeyword}, '%'))
             </if>
+        ORDER BY
+            b.board_id DESC
         LIMIT #{limit}
         OFFSET #{offset}
     </select>

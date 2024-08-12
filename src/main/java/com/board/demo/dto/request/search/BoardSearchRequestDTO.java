@@ -16,7 +16,7 @@ public class BoardSearchRequestDTO {
     private String categoryName = null;
 
     @Nullable
-    private String keyWord = null;
+    private String keyword = null;
 
     @Nullable
     private Integer page = 1;

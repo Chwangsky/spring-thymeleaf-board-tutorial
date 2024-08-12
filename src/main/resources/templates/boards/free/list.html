@@ -8,16 +8,16 @@
     <h2>자유게시판 - 목록</h2>
     <form th:action="@{/boards/free/list}" method="get">
       <label for="regDateStart">등록일:</label>
-      <input type="date" id="regDateStart" name="regDateStart" /><br /><br />
+      <input type="date" id="regDateStart" name="regDateStart" th:value="${boardSearchDTO.regDateStart}" /><br /><br />
 
       <label for="regDateEnd">최근 수정일:</label>
-      <input type="date" id="regDateEnd" name="regDateEnd" /><br /><br />
+      <input type="date" id="regDateEnd" name="regDateEnd" th:value="${boardSearchDTO.regDateEnd}" /><br /><br />
 
       <label for="categoryName">카테고리:</label>
-      <select id="categoryName" name="categoryName">
+      <select id="categoryName" name="categoryName" th:value="${boardSearchDTO.categoryName}">
         <option value="">--카테고리를 선택해 주세요--</option>
         <option
-          th:each="items : ${dto.categoryIdNameItems}"
+          th:each="items : ${boardSearchDTO.categoryIdNameItems}"
           th:value="${items.name}"
           th:text="${items.name}"
         ></option>
@@ -25,13 +25,13 @@
       <br /><br />
 
       <label for="keyword">검색어:</label>
-      <input type="text" id="keyword" name="keyword" /><br /><br />
+      <input type="text" id="keyword" name="keyword" th:value="${boardSearchDTO.keyWord}" /><br /><br />
 
       <input type="submit" value="Search" />
     </form>
 
     <h2>게시글 검색</h2>
-    <p>Total Count: <span th:text="${dto.totalCount}"></span></p>
+    <p>Total Count: <span th:text="${boardSearchDTO.totalCount}"></span></p>
     <table border="1">
       <tr>
         <th>Category</th>
@@ -42,7 +42,7 @@
         <th>Reg Date</th>
         <th>Update Date</th>
       </tr>
-      <tr th:each="item : ${dto.boardDetailResponseItems}">
+      <tr th:each="item : ${boardSearchDTO.boardDetailResponseItems}">
         <td th:text="${item.category}"></td>
         <td>
           <a
@@ -59,39 +59,39 @@
     </table>
 
     <div class="pagination">
-      <span th:if="${dto.paginationDto.currentSection != 1}">
+      <span th:if="${boardSearchDTO.paginationDto.currentSection != 1}">
         <a
-          th:href="@{/boards/free/list(page=${dto.paginationDto.currentSectionPageBegin - 1})}"
+          th:href="@{/boards/free/list(page=${boardSearchDTO.paginationDto.currentSectionPageBegin - 1}, regDateStart=${boardSearchDTO.regDateStart}, regDateEnd=${boardSearchDTO.regDateEnd}, categoryName=${boardSearchDTO.categoryName}, keyword=${boardSearchDTO.keyWord})}"
           >&lt;</a
         >
       </span>
 
       <span
-        th:each="i : ${#numbers.sequence(dto.paginationDto.currentSectionPageBegin, dto.paginationDto.currentSectionPageEnd)}"
+        th:each="i : ${#numbers.sequence(boardSearchDTO.paginationDto.currentSectionPageBegin, boardSearchDTO.paginationDto.currentSectionPageEnd)}"
       >
         <span
-          th:if="${i == dto.paginationDto.currentPage}"
+          th:if="${i == boardSearchDTO.paginationDto.currentPage}"
           th:text="${i}"
         ></span>
         <a
-          th:if="${i != dto.paginationDto.currentPage}"
-          th:href="@{/boards/free/list(page=${i})}"
+          th:if="${i != boardSearchDTO.paginationDto.currentPage}"
+          th:href="@{/boards/free/list(page=${i}, regDateStart=${boardSearchDTO.regDateStart}, regDateEnd=${boardSearchDTO.regDateEnd}, categoryName=${boardSearchDTO.categoryName}, keyword=${boardSearchDTO.keyWord})}"
           th:text="${i}"
         ></a>
       </span>
 
       <span
-        th:if="${dto.paginationDto.currentSection != dto.paginationDto.totalSection}"
+        th:if="${boardSearchDTO.paginationDto.currentSection != boardSearchDTO.paginationDto.totalSection}"
       >
         <a
-          th:href="@{/boards/free/list(page=${dto.paginationDto.currentSectionPageEnd + 1})}"
+          th:href="@{/boards/free/list(page=${boardSearchDTO.paginationDto.currentSectionPageEnd + 1}, regDateStart=${boardSearchDTO.regDateStart}, regDateEnd=${boardSearchDTO.regDateEnd}, categoryName=${boardSearchDTO.categoryName}, keyword=${boardSearchDTO.keyWord})}"
           >&gt;</a
         >
       </span>
 
       <a
-        th:href="@{/boards/free/list(page=${dto.paginationDto.totalPage})}"
-        th:text="${dto.paginationDto.totalPage}"
+        th:href="@{/boards/free/list(page=${boardSearchDTO.paginationDto.totalPage}, regDateStart=${boardSearchDTO.regDateStart}, regDateEnd=${boardSearchDTO.regDateEnd}, categoryName=${boardSearchDTO.categoryName}, keyword=${boardSearchDTO.keyWord})}"
+        th:text="${boardSearchDTO.paginationDto.totalPage}"
       ></a>
     </div>
   </body>

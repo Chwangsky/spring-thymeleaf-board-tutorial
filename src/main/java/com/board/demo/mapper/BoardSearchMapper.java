@@ -17,14 +17,14 @@ public interface BoardSearchMapper {
                         @Param("regDateEnd") String regDateEnd,
                         @Param("categoryName") String categoryName,
 
-                        @Param("titleAndContentKeyword") String titleAndContentKeyword,
+                        @Param("keyword") String keyword,
                         @Param("limit") int limit, @Param("offset") int offset);
 
         int boardSearchCount(@Param("regDateStart") String regDateStart,
                         @Param("regDateEnd") String regDateEnd,
                         @Param("categoryName") String categoryName,
 
-                        @Param("titleAndContentKeyword") String titleAndContentKeyword);
+                        @Param("keyword") String keyword);
 
         @Select("SELECT category_id as categoryId, name FROM category")
         List<CategoryIdNameEntity> findAllCategoryIdsAndNames();

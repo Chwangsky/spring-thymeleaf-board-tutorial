@@ -8,11 +8,7 @@
     <!-- 검색결과를 pagination 고려하여 가져오는 쿼리-->
     <select id="boardSearch" resultType="com.board.demo.entity.BoardSearchEntity">
         SELECT
-            (
-                SELECT c.name
-                FROM category c
-                WHERE b.category_id = c.category_id
-            ) AS category,
+            c.name AS category,
             b.board_id AS boardId,
             (
                 SELECT COUNT(*)
@@ -26,25 +22,25 @@
             b.update_date AS updateDate
         FROM
             board b
+        LEFT JOIN
+            category c ON b.category_id = c.category_id
         WHERE
             1=1
-            <if test="regDateStart != null">
+            <if test="regDateStart != null and regDateStart != ''">
                 AND b.reg_date <![CDATA[ >= ]]> #{regDateStart}
             </if>
-            <if test="regDateEnd != null">
+            <if test="regDateEnd != null and regDateEnd != ''">
                 AND b.reg_date <![CDATA[ <= ]]> #{regDateEnd}
             </if>
-            <if test="categoryName != null">
-                AND b.category_id = (
-                    SELECT c.category_id
-                    FROM category c
-                    WHERE c.name = #{categoryName}
-                )
-            </if>   
-            <if test="titleAndContentKeyword != null and titleAndContentKeyword != ''">
-                AND (b.title LIKE CONCAT('%', #{titleAndContentKeyword}, '%')
+            <if test="categoryName != null and categoryName != ''">
+                AND c.name = #{categoryName}
+            </if>
+            <if test="keyword != null and keyword != ''">
+                AND (b.title LIKE CONCAT('%', #{keyword}, '%')
                     OR
-                    b.content LIKE CONCAT('%', #{titleAndContentKeyword}, '%'))
+                    b.content LIKE CONCAT('%', #{keyword}, '%')
+                    OR
+                    b.writer LIKE CONCAT('%', #{keyword}, '%'))
             </if>
         ORDER BY
             b.board_id DESC
@@ -58,25 +54,25 @@
             COUNT(*) as totalCount
         FROM
             board b
+        LEFT JOIN
+            category c ON b.category_id = c.category_id
         WHERE
             1=1
-            <if test="regDateStart != null">
+            <if test="regDateStart != null and regDateStart != ''">
                 AND b.reg_date <![CDATA[ >= ]]> #{regDateStart}
             </if>
-            <if test="regDateEnd != null">
+            <if test="regDateEnd != null and regDateEnd != ''">
                 AND b.reg_date <![CDATA[ <= ]]> #{regDateEnd}
             </if>
-            <if test="categoryName != null">
-                AND b.category_id = (
-                    SELECT c.category_id
-                    FROM category c
-                    WHERE c.name = #{categoryName}
-                )
-            </if>   
-            <if test="titleAndContentKeyword != null and titleAndContentKeyword != ''">
-                AND (b.title LIKE CONCAT('%', #{titleAndContentKeyword}, '%')
+            <if test="categoryName != null and categoryName != ''">
+                AND c.name = #{categoryName}
+            </if>
+            <if test="keyword != null and keyword != ''">
+                AND (b.title LIKE CONCAT('%', #{keyword}, '%')
                     OR
-                    b.content LIKE CONCAT('%', #{titleAndContentKeyword}, '%'))
+                    b.content LIKE CONCAT('%', #{keyword}, '%')
+                    OR
+                    b.writer LIKE CONCAT('%', #{keyword}, '%'))
             </if>
     </select>
 

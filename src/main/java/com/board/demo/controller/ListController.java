@@ -44,18 +44,15 @@ public class ListController {
         }
 
         @GetMapping("/list")
-        public String showBoardList(@ModelAttribute BoardSearchRequestDTO boardSearchDTO, Model model) {
+        public String showBoardList(BoardSearchRequestDTO boardSearchDTO, Model model) {
                 log.info("보드 목록을 보여줍니다.");
 
-                if (boardSearchDTO == null) {
-                        boardSearchDTO = new BoardSearchRequestDTO();
-                        // 다른 기본값 설정 (필요한 경우)
+                int page = 1;
+                if (boardSearchDTO.getPage() != null) {
+                        page = boardSearchDTO.getPage();
                 }
-
-                model.addAttribute("boardSearchDTO", boardSearchDTO);
-
-                int page = boardSearchDTO.getPage();
                 int offset = (page - 1) * ITEMS_PER_PAGE;
+
                 String regDateStart = boardSearchDTO.getRegDateStart();
                 String regDateEnd = boardSearchDTO.getRegDateEnd();
                 String keyword = boardSearchDTO.getKeyword();
@@ -63,7 +60,7 @@ public class ListController {
 
                 System.out.println("키워드");
                 System.out.println("0woooooo");
-                System.out.println(keyword);
+                System.out.println(boardSearchDTO); // FIXME 삭제
 
                 List<BoardSearchEntity> boardSearchEntities = mapper.boardSearch(regDateStart, regDateEnd, categoryName,
                                 keyword, ITEMS_PER_PAGE, offset);
@@ -87,6 +84,11 @@ public class ListController {
                                 .boardDetailResponseItems(boardDetailResponseItems)
                                 .categoryIdNameItems(categoriesItems)
                                 .paginationDto(paginationDto)
+                                // 여기서부터, form을 계속 저장하면서 가지고 다니기 위한 변수들
+                                .regDateStart(regDateStart)
+                                .regDateEnd(regDateEnd)
+                                .keyword(keyword)
+                                .categoryName(categoryName)
                                 .build();
 
                 model.addAttribute("dto", boardSearchResponseDTO);

@@ -1,23 +1,21 @@
 package com.board.demo.dto.request.search;
 
-import io.micrometer.common.lang.Nullable;
 import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@Setter
 @Getter
+@ToString
 public class BoardSearchRequestDTO {
 
-    @Nullable
-    private String regDateStart = "1900-01-01";
+    private String regDateStart; // 초기값이 있으면 @Nullable 불필요
 
-    @Nullable
-    private String regDateEnd = "2100-12-31";
+    private String regDateEnd;
 
-    @Nullable
-    private String categoryName = null;
+    private String categoryName;
 
-    @Nullable
-    private String keyword = null;
+    private String keyword;
 
-    @Nullable
-    private Integer page = 1;
+    private Integer page;
 }

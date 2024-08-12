@@ -10,7 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FileEntity {
-    private int filesId;
+    private int fileId;
     private String attachType;
     private int byteSize;
     private String uuidName;

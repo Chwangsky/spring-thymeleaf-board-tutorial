@@ -6,8 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.board.demo.dto.request.search.BoardListRequestDTO;
-import com.board.demo.dto.response.search.BoardListResponseDTO;
+import com.board.demo.dto.request.list.BoardListRequestDTO;
+import com.board.demo.dto.response.list.BoardListResponseDTO;
 import com.board.demo.service.BoardListService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +22,6 @@ public class ListController {
 
         @GetMapping
         public String showBoardList(BoardListRequestDTO boardSearchDTO, Model model) {
-                log.info("보드 목록을 보여줍니다.");
 
                 BoardListResponseDTO boardListResponseDTO = boardListService.searchBoards(boardSearchDTO);
 

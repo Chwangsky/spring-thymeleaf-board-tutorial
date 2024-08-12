@@ -1,4 +1,4 @@
-package com.board.demo.dto.response.search;
+package com.board.demo.dto.response.list;
 
 import java.time.LocalDateTime;
 

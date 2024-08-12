@@ -1,4 +1,4 @@
-package com.board.demo.dto.request.search;
+package com.board.demo.dto.request.list;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -7,11 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.board.demo.dto.request.search.BoardListRequestDTO;
-import com.board.demo.dto.response.search.BoardDetailResponseItem;
-import com.board.demo.dto.response.search.BoardListResponseDTO;
-import com.board.demo.dto.response.search.CategoryIdNameItem;
-import com.board.demo.dto.response.search.PaginationDTO;
+import com.board.demo.dto.request.list.BoardListRequestDTO;
+import com.board.demo.dto.response.list.BoardDetailResponseItem;
+import com.board.demo.dto.response.list.BoardListResponseDTO;
+import com.board.demo.dto.response.list.CategoryIdNameItem;
+import com.board.demo.dto.response.list.PaginationDTO;
 import com.board.demo.entity.BoardSearchEntity;
 import com.board.demo.entity.CategoryIdNameEntity;
 import com.board.demo.mapper.BoardSearchMapper;

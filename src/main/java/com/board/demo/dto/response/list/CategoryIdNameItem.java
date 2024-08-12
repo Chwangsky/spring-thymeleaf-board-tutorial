@@ -1,4 +1,4 @@
-package com.board.demo.dto.response.search;
+package com.board.demo.dto.response.list;
 
 import com.board.demo.entity.CategoryIdNameEntity;
 

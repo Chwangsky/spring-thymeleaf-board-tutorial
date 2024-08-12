@@ -9,7 +9,7 @@ import lombok.ToString;
 @ToString
 public class BoardSearchRequestDTO {
 
-    private String regDateStart; // 초기값이 있으면 @Nullable 불필요
+    private String regDateStart;
 
     private String regDateEnd;
 

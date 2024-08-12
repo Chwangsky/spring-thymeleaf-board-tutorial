@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.board.demo.mapper.BoardSearchMapper">
+
+    <!-- 검색결과를 pagination 고려하여 가져오는 쿼리-->
+    <select id="boardSearch" resultType="com.board.demo.entity.BoardSearchEntity">
+        SELECT
+            (
+                SELECT c.name
+                FROM category c
+                WHERE b.category_id = c.category_id
+            ) AS category,
+            b.board_id AS boardId,
+            (
+                SELECT COUNT(*)
+                FROM files f
+                WHERE f.board_id = b.board_id
+            ) AS fileCount,
+            b.title AS title,
+            b.writer AS writer,
+            b.views AS views,
+            b.reg_date AS regDate,
+            b.update_date AS updateDate
+        FROM
+            board b
+        WHERE
+            1=1
+            <if test="regDateStart != null">
+                AND b.reg_date <![CDATA[ >= ]]> #{regDateStart}
+            </if>
+            <if test="regDateEnd != null">
+                AND b.reg_date <![CDATA[ <= ]]> #{regDateEnd}
+            </if>
+            <if test="categoryName != null">
+                AND b.category_id = (
+                    SELECT c.category_id
+                    FROM category c
+                    WHERE c.name = #{categoryName}
+                )
+            </if>   
+            <if test="titleAndContentKeyword != null and titleAndContentKeyword != ''">
+                AND (b.title LIKE CONCAT('%', #{titleAndContentKeyword}, '%')
+                    OR
+                    b.content LIKE CONCAT('%', #{titleAndContentKeyword}, '%'))
+            </if>
+        LIMIT #{limit}
+        OFFSET #{offset}
+    </select>
+
+    <!-- 검색결과의 전체 개수를 가져오는 쿼리-->
+    <select id="boardSearchCount" resultType="int">
+        SELECT
+            COUNT(*) as totalCount
+        FROM
+            board b
+        WHERE
+            1=1
+            <if test="regDateStart != null">
+                AND b.reg_date <![CDATA[ >= ]]> #{regDateStart}
+            </if>
+            <if test="regDateEnd != null">
+                AND b.reg_date <![CDATA[ <= ]]> #{regDateEnd}
+            </if>
+            <if test="categoryName != null">
+                AND b.category_id = (
+                    SELECT c.category_id
+                    FROM category c
+                    WHERE c.name = #{categoryName}
+                )
+            </if>   
+            <if test="titleAndContentKeyword != null and titleAndContentKeyword != ''">
+                AND (b.title LIKE CONCAT('%', #{titleAndContentKeyword}, '%')
+                    OR
+                    b.content LIKE CONCAT('%', #{titleAndContentKeyword}, '%'))
+            </if>
+    </select>
+
+</mapper>

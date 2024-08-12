@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>게시판 목록</title>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <h2>자유게시판 - 목록</h2>
+    <form th:action="@{/boards/free/list}" method="get">
+      <label for="regDateStart">등록일:</label>
+      <input type="date" id="regDateStart" name="regDateStart" /><br /><br />
+
+      <label for="regDateEnd">최근 수정일:</label>
+      <input type="date" id="regDateEnd" name="regDateEnd" /><br /><br />
+
+      <label for="categoryName">카테고리:</label>
+      <select id="categoryName" name="categoryName">
+        <option value="">--카테고리를 선택해 주세요--</option>
+        <option
+          th:each="items : ${dto.categoryIdNameItems}"
+          th:value="${items.name}"
+          th:text="${items.name}"
+        ></option>
+      </select>
+      <br /><br />
+
+      <label for="keyword">검색어:</label>
+      <input type="text" id="keyword" name="keyword" /><br /><br />
+
+      <input type="submit" value="Search" />
+    </form>
+
+    <h2>게시글 검색</h2>
+    <p>Total Count: <span th:text="${dto.totalCount}"></span></p>
+    <table border="1">
+      <tr>
+        <th>Category</th>
+        <th>Title</th>
+        <th>File Count</th>
+        <th>Writer</th>
+        <th>Views</th>
+        <th>Reg Date</th>
+        <th>Update Date</th>
+      </tr>
+      <tr th:each="item : ${dto.boardDetailResponseItems}">
+        <td th:text="${item.category}"></td>
+        <td>
+          <a
+            th:href="@{/boards/free/views/{id}(id=${item.boardId})}"
+            th:text="${item.title}"
+          ></a>
+        </td>
+        <td th:text="${item.fileCount}"></td>
+        <td th:text="${item.writer}"></td>
+        <td th:text="${item.views}"></td>
+        <td th:text="${item.regDate}"></td>
+        <td th:text="${item.updateDate}"></td>
+      </tr>
+    </table>
+
+    <div class="pagination">
+      <span th:if="${dto.paginationDto.currentSection != 1}">
+        <a
+          th:href="@{/boards/free/list(page=${dto.paginationDto.currentSectionPageBegin - 1})}"
+          >&lt;</a
+        >
+      </span>
+
+      <span
+        th:each="i : ${#numbers.sequence(dto.paginationDto.currentSectionPageBegin, dto.paginationDto.currentSectionPageEnd)}"
+      >
+        <span
+          th:if="${i == dto.paginationDto.currentPage}"
+          th:text="${i}"
+        ></span>
+        <a
+          th:if="${i != dto.paginationDto.currentPage}"
+          th:href="@{/boards/free/list(page=${i})}"
+          th:text="${i}"
+        ></a>
+      </span>
+
+      <span
+        th:if="${dto.paginationDto.currentSection != dto.paginationDto.totalSection}"
+      >
+        <a
+          th:href="@{/boards/free/list(page=${dto.paginationDto.currentSectionPageEnd + 1})}"
+          >&gt;</a
+        >
+      </span>
+
+      <a
+        th:href="@{/boards/free/list(page=${dto.paginationDto.totalPage})}"
+        th:text="${dto.paginationDto.totalPage}"
+      ></a>
+    </div>
+  </body>
+</html>

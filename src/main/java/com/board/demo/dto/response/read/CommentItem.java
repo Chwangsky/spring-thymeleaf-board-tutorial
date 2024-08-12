@@ -10,6 +10,7 @@ import lombok.Getter;
 public class CommentItem {
     private Integer commentId;
     private String content;
+    private String writer;
     private LocalDateTime regDate;
 
 }

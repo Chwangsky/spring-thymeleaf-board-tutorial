@@ -32,6 +32,7 @@ public class BoardReadResponseDTO {
                                 .map(comment -> CommentItem.builder()
                                                 .commentId(comment.getCommentId())
                                                 .content(comment.getContent())
+                                                .writer(comment.getWriter())
                                                 .regDate(comment.getRegDate())
                                                 .build())
                                 .collect(Collectors.toList());

@@ -20,7 +20,9 @@ public interface BoardReadMapper {
         BoardDetailEntity selectBoardDetailById(int boardId);
 
         @Select("SELECT c.comment_id AS commentId, " + "c.content AS content, "
-                        + "c.reg_date AS regDate " + "FROM comments c "
+                        + "c.reg_date AS regDate, "
+                        + "c.writer AS writer "
+                        + "FROM comments c "
                         + "WHERE c.board_id = #{boardId}")
         List<CommentEntity> selectCommentsByBoardId(@Param("boardId") int boardId);
 
@@ -30,16 +32,14 @@ public interface BoardReadMapper {
                         + "WHERE f.board_id = #{boardId}")
         List<FileEntity> selectFilesByBoardId(@Param("boardId") int boardId);
 
-
         // 조회수를 1 증가시키는 메서드
         @Insert("UPDATE board SET views = views + 1 WHERE board_id = #{boardId}")
         void incrementViewCount(@Param("boardId") int boardId);
 
         // 댓글 추가하는 메서드
-        @Insert("INSERT INTO comments (board_id, content, reg_date) "
-                        + "VALUES (#{boardId}, #{content}, NOW())")
-        void insertComment(@Param("boardId") int boardId, @Param("content") String content);
-
-
+        @Insert("INSERT INTO comments (board_id, content, writer, reg_date) "
+                        + "VALUES (#{boardId}, #{content}, #{writer}, NOW())")
+        void insertComment(@Param("boardId") int boardId, @Param("content") String content,
+                        @Param("writer") String writer);
 
 }

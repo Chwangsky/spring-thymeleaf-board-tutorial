@@ -3,15 +3,16 @@ package com.board.demo.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import com.board.demo.dto.request.read.CommentPostRequestDTO;
+import com.board.demo.dto.request.read.PostCommentRequestDTO;
 import com.board.demo.dto.response.read.BoardReadResponseDTO;
-import com.board.demo.dto.response.read.CommentPostResponseDTO;
 import com.board.demo.entity.BoardDetailEntity;
 import com.board.demo.entity.CommentEntity;
 import com.board.demo.entity.FileEntity;
 import com.board.demo.mapper.BoardReadMapper;
 
+@Service
 public class BoardReadServiceImpl implements BoardReadService {
 
     @Autowired
@@ -32,13 +33,15 @@ public class BoardReadServiceImpl implements BoardReadService {
     }
 
     @Override
-    public CommentPostResponseDTO postComment(CommentPostRequestDTO commentPostRequestDTO) {
+    public Integer postComment(PostCommentRequestDTO commentPostRequestDTO) {
+
         Integer boardId = commentPostRequestDTO.getBoardId();
         String content = commentPostRequestDTO.getContent();
         String writer = commentPostRequestDTO.getWriter();
 
         mapper.insertComment(boardId, writer, content);
 
+        return boardId;
     }
 
 }

@@ -7,7 +7,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class CommentPostRequestDTO {
+public class PostCommentRequestDTO {
     Integer boardId;
     String writer;
     String content;

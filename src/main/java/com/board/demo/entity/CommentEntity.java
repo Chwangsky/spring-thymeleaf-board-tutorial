@@ -13,5 +13,6 @@ import lombok.Setter;
 public class CommentEntity {
     private int commentId;
     private String content;
+    private String writer;
     private LocalDateTime regDate;
 }

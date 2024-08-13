@@ -19,14 +19,18 @@ import com.board.demo.mapper.BoardSearchMapper;
 @Service
 public class BoardListServiceImpl implements BoardListService {
 
-        @Autowired
-        private BoardSearchMapper mapper;
+        private final BoardSearchMapper mapper;
+        private final int itemsPerPage;
+        private final int pagePerSection;
 
-        @Value("${board.items-per-page}")
-        private int itemsPerPage;
-
-        @Value("${board.page-per-section}")
-        private int pagePerSection;
+        public BoardListServiceImpl(
+                        BoardSearchMapper mapper,
+                        @Value("${board.items-per-page}") int itemsPerPage,
+                        @Value("${board.page-per-section}") int pagePerSection) {
+                this.mapper = mapper;
+                this.itemsPerPage = itemsPerPage;
+                this.pagePerSection = pagePerSection;
+        }
 
         @Override
         public BoardListResponseDTO searchBoards(BoardListRequestDTO boardListDTO) {

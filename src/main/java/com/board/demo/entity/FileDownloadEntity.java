@@ -13,4 +13,5 @@ public class FileDownloadEntity {
     private String fileDir;
     private String attachType;
     private String uuidName;
+    private String orgName;
 }

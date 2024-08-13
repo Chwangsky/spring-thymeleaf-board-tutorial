@@ -17,17 +17,20 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/boards/free/list")
 public class ListController {
 
-        @Autowired
-        private BoardListService boardListService;
+    private final BoardListService boardListService;
 
-        @GetMapping
-        public String showBoardList(BoardListRequestDTO boardSearchDTO, Model model) {
+    public ListController(BoardListService boardListService) {
+        this.boardListService = boardListService;
+    }
 
-                BoardListResponseDTO boardListResponseDTO = boardListService.searchBoards(boardSearchDTO);
+    @GetMapping
+    public String showBoardList(BoardListRequestDTO boardSearchDTO, Model model) {
 
-                model.addAttribute("dto", boardListResponseDTO);
+        BoardListResponseDTO boardListResponseDTO = boardListService.searchBoards(boardSearchDTO);
 
-                return "boards/free/list";
-        }
+        model.addAttribute("dto", boardListResponseDTO);
+
+        return "boards/free/list";
+    }
 
 }

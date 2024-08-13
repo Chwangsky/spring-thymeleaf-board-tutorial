@@ -48,7 +48,7 @@
                             <span th:text="${file.byteSize}"></span> bytes)
                         </small><br>
                         <small>파일 경로: 
-                            <a th:href="@{/download.do(id=${file.filesId})}" th:text="${file.orgName}"></a>
+                            <a th:href="@{/download.do(id=${file.fileId})}" th:text="${file.orgName}"></a>
                         </small>
                     </li>
                 </ul>

@@ -15,8 +15,11 @@ import com.board.demo.mapper.BoardReadMapper;
 @Service
 public class BoardReadServiceImpl implements BoardReadService {
 
-    @Autowired
-    private BoardReadMapper mapper;
+    private final BoardReadMapper mapper;
+
+    public BoardReadServiceImpl(BoardReadMapper mapper) {
+        this.mapper = mapper;
+    }
 
     @Override
     public BoardReadResponseDTO getBoardDetail(int boardId) {

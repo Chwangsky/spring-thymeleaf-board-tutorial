@@ -26,7 +26,7 @@ public interface BoardReadMapper {
                         + "WHERE c.board_id = #{boardId}")
         List<CommentEntity> selectCommentsByBoardId(@Param("boardId") int boardId);
 
-        @Select("SELECT f.files_id AS filesId, " + "f.attach_type AS attachType, "
+        @Select("SELECT f.files_id AS fileId, " + "f.attach_type AS attachType, "
                         + "f.byte_size AS byteSize, " + "f.uuid_name AS uuidName, "
                         + "f.org_name AS orgName, " + "f.file_dir AS fileDir " + "FROM files f "
                         + "WHERE f.board_id = #{boardId}")

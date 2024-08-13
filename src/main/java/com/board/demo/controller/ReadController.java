@@ -5,21 +5,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.board.demo.dto.request.read.PostCommentRequestDTO;
-import com.board.demo.dto.response.list.BoardListResponseDTO;
 import com.board.demo.dto.response.read.BoardReadResponseDTO;
 import com.board.demo.service.BoardReadService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 @RequestMapping("/boards/free/views")
 public class ReadController {
 
-    @Autowired
-    private BoardReadService boardReadService;
+    private final BoardReadService boardReadService;
+
+    public ReadController(BoardReadService boardReadService) {
+        this.boardReadService = boardReadService;
+    }
 
     @GetMapping("/{boardId}")
     public String getBoardDetail(@PathVariable("boardId") Integer boardId, Model model) {

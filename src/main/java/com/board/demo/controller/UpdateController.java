@@ -6,8 +6,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.board.demo.dto.request.update.UpdatePostRequestDTO;
 import com.board.demo.dto.response.update.UpdateResponseDTO;
 import com.board.demo.service.BoardUpdateService;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 @RequestMapping("/boards/free/modify")
@@ -24,6 +27,12 @@ public class UpdateController {
         UpdateResponseDTO dto = boardUpdateService.getupdate(boardId);
         model.addAttribute("dto", dto);
         return "/boards/free/update";
+    }
+
+    @PostMapping
+    public String postModifyForm(UpdatePostRequestDTO updatePostRequestDTO) {
+        Integer boardId = boardUpdateService.postUpdate(updatePostRequestDTO);
+        return "redirect:/boards/free/views/" + String.valueOf(boardId);
     }
 
 }

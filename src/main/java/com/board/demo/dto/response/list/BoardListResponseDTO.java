@@ -15,7 +15,7 @@ public class BoardListResponseDTO {
     private List<CategoryIdNameItem> categoryIdNameItems;
 
     // form 을 계속 저장하면서 가지고 다니기 위한 변수들
-    private String regDateStart = LocalDate.now().minusYears(3).toString();
+    private String regDateStart = LocalDate.now().minusYears(1).toString(); // 디폴트 최근 1년
     private String regDateEnd = LocalDate.now().toString();
     private String keyword = "";
     private String categoryName = "";

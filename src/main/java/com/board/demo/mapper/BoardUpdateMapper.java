@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import com.board.demo.entity.BoardUpdateDetailEntity;
 import com.board.demo.entity.FileEntity;
+import com.board.demo.entity.FileInsertEntity;
 
 @Mapper
 public interface BoardUpdateMapper {
@@ -35,5 +36,6 @@ public interface BoardUpdateMapper {
 
         @Update("INSERT INTO files (board_id, attach_type, byte_size, uuid_name, org_name, file_dir) "
                         + "VALUES (#{boardId}, #{attachType}, #{byteSize}, #{uuidName}, #{orgName}, #{fileDir})")
-        void insertFile(FileEntity file);
+        void insertFile(FileInsertEntity fileEntity);
+
 }

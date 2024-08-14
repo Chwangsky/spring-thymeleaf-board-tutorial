@@ -38,4 +38,7 @@ public interface BoardUpdateMapper {
                         + "VALUES (#{boardId}, #{attachType}, #{byteSize}, #{uuidName}, #{orgName}, #{fileDir})")
         void insertFile(FileInsertEntity fileEntity);
 
+        @Update("Update board SET update_date = NOW() WHERE board_id = #{boardId}")
+        void updateUpdateDate(@Param("boardId") int boardId);
+
 }

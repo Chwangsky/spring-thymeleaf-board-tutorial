@@ -91,25 +91,6 @@ public class BoardUpdateServiceImpl implements BoardUpdateService {
                             // 1. DB에서 삭제
                             mapper.deleteFileById(parsedFileId);
 
-                            // 2. 로컬에서 삭제
-                            // 2-1. fileEntities에서 FileId와 동일한 fileEntities를 찾아서 그 fileDir을 반환
-                            String fileDir = fileEntities.stream()
-                                    .filter(a -> a.getFileId() == parsedFileId)
-                                    .map(FileEntity::getFileDir)
-                                    .findFirst()
-                                    .orElse(null);
-                            if (fileDir == null)
-                                continue;
-
-                            File f = new File(fileDir);
-
-                            // 2-2. 파일이 존재하고 파일이면 삭제
-                            if (f.exists() && f.isFile()) {
-                                f.delete();
-                            } else {
-                                log.warn("삭제하고자 하는 파일이 존재하지 않습니다. 파일 dir : {}", fileDir);
-                            }
-
                         } catch (NumberFormatException e) {
                             log.warn("파일 id 파싱 실패. 파일 id가 잘못 입력되었습니다. 로그를 확인해 주세요");
                         }
@@ -154,6 +135,9 @@ public class BoardUpdateServiceImpl implements BoardUpdateService {
 
             mapper.insertFile(fileEntity);
         }
+
+        // update_date 갱신
+        mapper.updateUpdateDate(boardId);
 
         return boardId;
 

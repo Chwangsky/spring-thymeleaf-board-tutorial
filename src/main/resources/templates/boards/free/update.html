@@ -5,7 +5,7 @@
     <title>게시글 수정</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <script>
+    <script th:inline="javascript">
         // 파일 삭제를 위한 배열
         let filesToDelete = [];
 
@@ -32,14 +32,52 @@
 
         // 폼 검증 함수
         function validateForm() {
-            const title = document.getElementById('title').value.trim();
-            const content = document.getElementById('content').value.trim();
-            if (title === '' || content === '') {
-                alert("제목과 내용을 입력해주세요.");
+
+            // 작성자 작성 여부 확인
+            const authorInput = document.getElementById('writer');
+            if (authorInput.value.trim() === "") {
+                alert('작성자 이름을 작성해 주세요');
                 return false;
             }
+
+            // 작성자 이름 길이 확인
+            if (authorInput.value.length < 3 || authorInput.value.length > 5) {
+                alert('작성자 이름은 3글자 이상, 5글자 이하이어야 합니다.');
+                return false;
+            }
+            
+            // 비밀번호 확인
+            const passwordInput = document.getElementById('password');
+            
+            // 비밀번호 길이 확인
+            if (passwordInput.value.trim().length < 4 || passwordInput.value.trim().length >= 16) {
+                alert('비밀번호는 4글자이상 16글자 미만이어야 합니다.')
+                return false;
+            }            
+
+            // 제목 확인
+            const titleInput = document.getElementById('title');
+            if (titleInput.value.trim() === '') {
+                alert('제목을 입력해 주세요');
+                return false;
+            }
+
+            // 제목 길이 확인
+            if (titleInput.value.trim().length < 4 || titleInput.value.trim().length >= 100) {
+                alert('제목의 길이는 4글자 이상, 100글자 미만이어야 합니다.');
+                return false;
+            }
+
+            // 내용 확인
+            const contentInput = document.getElementById('content');
+            if (contentInput.value.trim().length < 4 || contentInput.value.trim().length >= 2000) {
+                alert('내용은 4글자 이상, 2000글자 미만이어야 합니다.');
+                return false;
+            }
+
             return true;
         }
+
     </script>
 </head>
 <body>
@@ -104,11 +142,11 @@
             <div class="form-group">
                 <label>기존 첨부파일</label>
                 <ul class="list-group" id="existingFiles">
-                    <div th:each="file : ${dto.files}">
-                        <li class="list-group-item d-flex justify-content-between align-items-center" th:id="'file-' + ${file.fileId}">
+                    <div th:each="file : ${dto.files}" th:id="'file-' + ${file.fileId}">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
                             <span th:text="${file.orgName} + ' (' + ${file.byteSize} + ' bytes)'"></span>
                             <span>
-                                <button type="button" class="btn btn-sm btn-danger" th:onclick="'removeFile(' + ${file.fileId} + ')'">삭제</button>
+                                <button type="button" class="btn btn-sm btn-danger" th:onclick="|removeFile(${file.fileId})|">삭제</button>
                             </span>
                         </li>
                     </div>

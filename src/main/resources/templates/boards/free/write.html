@@ -35,10 +35,36 @@
                 alert('비밀번호를 입력해 주세요');
                 return false;
             }
+            
+            // 비밀번호 길이 확인
+            if (passwordInput.value.trim().length < 4 || passwordInput.value.trim().length >= 16) {
+                alert('비밀번호는 4글자이상 16글자 미만이어야 합니다.')
+                return false;
+            }            
 
             // 비밀번호와 비밀번호 확인 동일 여부 확인
             if (passwordInput.value !== passwordRepeatInput.value) {
                 alert('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
+                return false;
+            }
+
+            // 제목 확인
+            const titleInput = document.getElementById('title');
+            if (titleInput.value.trim() === '') {
+                alert('제목을 입력해 주세요');
+                return false;
+            }
+
+            // 제목 길이 확인
+            if (titleInput.value.trim().length < 4 || titleInput.value.trim().length >= 100) {
+                alert('제목의 길이는 4글자 이상, 100글자 미만이어야 합니다.');
+                return false;
+            }
+
+            // 내용 확인
+            const contentInput = document.getElementById('content');
+            if (contentInput.value.trim().length < 4 || contentInput.value.trim().length >= 2000) {
+                alert('내용은 4글자 이상, 2000글자 미만이어야 합니다.');
                 return false;
             }
 
@@ -112,7 +138,7 @@
 
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">저장</button>
-                <button type="button" class="btn btn-danger" onclick="window.location.href='[@{/boards/free/list}]'">취소</button>
+                <button type="button" class="btn btn-danger" onclick="window.location.href='[[@{/boards/free/list}]]'">취소</button>
             </div>
         </form>
         

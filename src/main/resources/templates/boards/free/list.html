@@ -10,19 +10,14 @@
     <form th:action="@{/boards/free/list}" method="get" class="mb-4 border p-3 rounded">
         <!-- 검색을 눌렀을 경우 page=1로 초기화-->
         <input type="hidden" name="page" value="1" />
-        <div class="row mb-3">
-            <div class="col">
-                <label for="regDateStart" class="form-label">등록 시작일:</label>
+        <div class="row mb-2">
+            <div class="col-md-2">
                 <input type="date" id="regDateStart" name="regDateStart" class="form-control" th:value="${dto.regDateStart}" />
             </div>
-            <div class="col">
-                <label for="regDateEnd" class="form-label">등록 종료일:</label>
+            <div class="col-md-2">
                 <input type="date" id="regDateEnd" name="regDateEnd" class="form-control" th:value="${dto.regDateEnd}" />
             </div>
-        </div>
-        <div class="row mb-3">
-            <div class="col">
-                <label for="categoryName" class="form-label">카테고리:</label>
+            <div class="col-md-3">
                 <select id="categoryName" name="categoryName" class="form-select">
                     <option value="" th:selected="${dto.categoryName == null or dto.categoryName == ''}">--카테고리를 선택해 주세요--</option>
                     <option th:each="items : ${dto.categoryIdNameItems}"
@@ -32,12 +27,13 @@
                     </option>
                 </select>
             </div>
-            <div class="col">
-                <label for="keyword" class="form-label">검색어:</label>
+            <div class="col-md-4">
                 <input type="text" id="keyword" name="keyword" class="form-control" th:value="${dto.keyword}" placeholder="검색어를 입력해 주세요. (제목+작성자+내용)" />
             </div>
+            <div class="col-md-1 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary">검색</button>
+            </div>
         </div>
-        <button type="submit" class="btn btn-primary">검색</button>
     </form>
 
     <h2>게시글 검색</h2>
@@ -99,6 +95,9 @@
         
         <!-- » -->
         <a class="btn btn-outline-primary" th:href="@{/boards/free/list(page=${dto.paginationDto.totalPage}, regDateStart=${dto.regDateStart}, regDateEnd=${dto.regDateEnd}, categoryName=${dto.categoryName}, keyword=${dto.keyword})}" >»</a>
+    </div>
+    <div class="d-flex justify-content-end mt-4">
+        <button type="button" class="btn btn-success" onclick="window.location.href='/boards/free/write'">등록</button>
     </div>
 </body>
 </html>

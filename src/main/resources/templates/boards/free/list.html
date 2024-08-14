@@ -71,25 +71,34 @@
         </tbody>
     </table>
 
-    <div th:if="dto.paginationDto.totalPage == 0" class="pagination">
+    <div th:if="${dto.totalCount != 0}" class="pagination">
+
+        <!-- « -->
+        <a class="btn btn-outline-primary" th:href="@{/boards/free/list(page=1, regDateStart=${dto.regDateStart}, regDateEnd=${dto.regDateEnd}, categoryName=${dto.categoryName}, keyword=${dto.keyword})}">«</a>
+
+        <!-- ‹ -->
         <span th:if="${dto.paginationDto.currentSection != 1}">
             <a class="btn btn-outline-primary" th:href="@{/boards/free/list(page=${dto.paginationDto.currentSectionPageBegin - 1}, regDateStart=${dto.regDateStart}, regDateEnd=${dto.regDateEnd}, categoryName=${dto.categoryName}, keyword=${dto.keyword})}">
-                &lt;
+                ‹
             </a>
         </span>
   
+        <!-- 숫자 -->
         <span th:each="i : ${#numbers.sequence(dto.paginationDto.currentSectionPageBegin, dto.paginationDto.currentSectionPageEnd)}">
             <span th:if="${i == dto.paginationDto.currentPage}" th:text="${i}" class="btn btn-primary"></span>
             <a th:if="${i != dto.paginationDto.currentPage}" th:href="@{/boards/free/list(page=${i}, regDateStart=${dto.regDateStart}, regDateEnd=${dto.regDateEnd}, categoryName=${dto.categoryName}, keyword=${dto.keyword})}" th:text="${i}" class="btn btn-outline-primary"></a>
         </span>
+
+        <!-- › -->
   
         <span th:if="${dto.paginationDto.currentSection != dto.paginationDto.totalSection}">
             <a class="btn btn-outline-primary" th:href="@{/boards/free/list(page=${dto.paginationDto.currentSectionPageEnd + 1}, regDateStart=${dto.regDateStart}, regDateEnd=${dto.regDateEnd}, categoryName=${dto.categoryName}, keyword=${dto.keyword})}">
-                &gt;
+                ›
             </a>
         </span>
         
-        <a class="btn btn-outline-primary" th:href="@{/boards/free/list(page=${dto.paginationDto.totalPage}, regDateStart=${dto.regDateStart}, regDateEnd=${dto.regDateEnd}, categoryName=${dto.categoryName}, keyword=${dto.keyword})}" th:text="${dto.paginationDto.totalPage}"></a>
+        <!-- » -->
+        <a class="btn btn-outline-primary" th:href="@{/boards/free/list(page=${dto.paginationDto.totalPage}, regDateStart=${dto.regDateStart}, regDateEnd=${dto.regDateEnd}, categoryName=${dto.categoryName}, keyword=${dto.keyword})}" >»</a>
     </div>
 </body>
 </html>

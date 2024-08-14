@@ -24,6 +24,7 @@ public class UpdateResponseDTO {
 
         private List<FileItem> files;
 
+        // TODO entity -> dto mapper 찾아보기
         public static UpdateResponseDTO fromEntities(BoardUpdateDetailEntity boardDetailEntity,
                         List<FileEntity> fileEntities) {
                 // FileEntity 리스트를 FileItem 리스트로 변환

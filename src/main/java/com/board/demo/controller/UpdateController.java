@@ -3,14 +3,13 @@ package com.board.demo.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.board.demo.dto.request.update.UpdatePostRequestDTO;
 import com.board.demo.dto.response.update.UpdateResponseDTO;
 import com.board.demo.service.BoardUpdateService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 @RequestMapping("/boards/free/modify")

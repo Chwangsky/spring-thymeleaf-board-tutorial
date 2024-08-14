@@ -53,7 +53,7 @@ public class BoardUpdateServiceImpl implements BoardUpdateService {
 
     @Override
     @Transactional
-    public int postUpdate(UpdatePostRequestDTO updatePostRequestDTO) {
+    public int postUpdate(UpdatePostRequestDTO updatePostRequestDTO) { // TODO void 
 
         @NotNull
         Integer boardId = updatePostRequestDTO.getBoardId();
@@ -70,7 +70,7 @@ public class BoardUpdateServiceImpl implements BoardUpdateService {
             log.info("비밀번호가 일치하지 않습니다.");
 
             // 비밀번호 불일치 처리 로직
-            return 0;
+            return 0; // throw
         }
 
         mapper.updateBoard(boardId, title, content, writer);
@@ -81,7 +81,7 @@ public class BoardUpdateServiceImpl implements BoardUpdateService {
         log.info("0woo filesToDelete", filesToDeleteString);
 
         if (filesToDeleteString != null && !filesToDeleteString.isEmpty()) {
-            String[] filesToDelete = filesToDeleteString.split(",");
+            String[] filesToDelete = filesToDeleteString.split(","); // DELIMITER 상수로??
             if (filesToDelete != null) {
                 for (String file : filesToDelete) {
                     if (!file.trim().isEmpty()) {
@@ -90,6 +90,8 @@ public class BoardUpdateServiceImpl implements BoardUpdateService {
 
                             // 1. DB에서 삭제
                             mapper.deleteFileById(parsedFileId);
+
+                            // 로컬파일 삭제 로직 추가
 
                         } catch (NumberFormatException e) {
                             log.warn("파일 id 파싱 실패. 파일 id가 잘못 입력되었습니다. 로그를 확인해 주세요");
@@ -115,7 +117,7 @@ public class BoardUpdateServiceImpl implements BoardUpdateService {
                 // 디렉토리가 없으면 생성
                 Files.createDirectories(Paths.get(uploadDirectory));
 
-                // 파일 저장
+                // STUDY- 파일 저장 InputStream? Buffer 조사
                 try (InputStream inputStream = file.getInputStream()) {
                     Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
                 }

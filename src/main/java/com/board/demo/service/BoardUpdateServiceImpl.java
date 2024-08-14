@@ -25,6 +25,7 @@ import com.board.demo.entity.BoardUpdateDetailEntity;
 import com.board.demo.entity.FileEntity;
 import com.board.demo.entity.FileInsertEntity;
 import com.board.demo.exception.FileWriteException;
+import com.board.demo.exception.PasswordNotMatchException;
 import com.board.demo.mapper.BoardUpdateMapper;
 
 import lombok.extern.slf4j.Slf4j;
@@ -53,7 +54,7 @@ public class BoardUpdateServiceImpl implements BoardUpdateService {
 
     @Override
     @Transactional
-    public int postUpdate(UpdatePostRequestDTO updatePostRequestDTO) { // TODO void 
+    public Integer postUpdate(UpdatePostRequestDTO updatePostRequestDTO) throws RuntimeException {
 
         @NotNull
         Integer boardId = updatePostRequestDTO.getBoardId();
@@ -68,9 +69,7 @@ public class BoardUpdateServiceImpl implements BoardUpdateService {
         // 비밀번호가 일치하지 않으면 오류 메시지를 추가하고 다시 수정 페이지로 리다이렉트
         if (!storedPassword.equals(password)) {
             log.info("비밀번호가 일치하지 않습니다.");
-
-            // 비밀번호 불일치 처리 로직
-            return 0; // throw
+            throw new PasswordNotMatchException();
         }
 
         mapper.updateBoard(boardId, title, content, writer);

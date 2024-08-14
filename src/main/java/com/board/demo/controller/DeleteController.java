@@ -1,18 +1,28 @@
 package com.board.demo.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+import com.board.demo.dto.request.delete.BoardDeleteRequestDTO;
+import com.board.demo.service.BoardDeleteService;
+
+@RestController
 @RequestMapping("/boards/free/delete")
 public class DeleteController {
 
-    @GetMapping("/{boardId}")
-    public String getDeleteForm(@PathVariable("boardId") Integer boardId) {
+    private final BoardDeleteService boardDeleteService;
 
-        return "boards/free/delete";
+    public DeleteController(BoardDeleteService boardDeleteService) {
+        this.boardDeleteService = boardDeleteService;
+    }
+
+    @PostMapping
+    public ResponseEntity<?> getDeleteForm(@RequestBody BoardDeleteRequestDTO boardDeleteRequestDTO) {
+
+        return boardDeleteService.deleteBoard(boardDeleteRequestDTO);
     }
 
 }

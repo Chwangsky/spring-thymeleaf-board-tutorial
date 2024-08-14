@@ -16,7 +16,7 @@ public class UpdatePostRequestDTO {
     String writer;
     String content;
 
-    String removeFiles; // removeFiles="1,2,3"과 같은 방식으로 넘어온다. 1, 2, 3은 삭제할 file의 id를 의미 TODO
+    String removeFiles; // TODO removeFiles="1,2,3"과 같은 방식으로 넘어온다. 1, 2, 3은 삭제할 file의 id를 의미
 
     MultipartFile[] newFiles;
 }

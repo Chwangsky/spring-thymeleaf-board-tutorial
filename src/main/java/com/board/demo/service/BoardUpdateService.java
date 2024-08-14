@@ -7,5 +7,5 @@ public interface BoardUpdateService {
 
     UpdateResponseDTO getupdate(int boardId);
 
-    int postUpdate(UpdatePostRequestDTO updatePostRequestDTO);
+    Integer postUpdate(UpdatePostRequestDTO updatePostRequestDTO);
 }

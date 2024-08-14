@@ -1,6 +1,7 @@
 package com.board.demo.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,7 +33,7 @@ public class ReadController {
     }
 
     @PostMapping
-    public String postComment(PostCommentRequestDTO postCommentRequestDTO) {
+    public String postComment(@Valid PostCommentRequestDTO postCommentRequestDTO) {
 
         int boardId = boardReadService.postComment(postCommentRequestDTO);
 

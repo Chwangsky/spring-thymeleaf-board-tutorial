@@ -1,5 +1,7 @@
 package com.board.demo.controller;
 
+import jakarta.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +31,7 @@ public class UpdateController {
     }
 
     @PostMapping
-    public String postModifyForm(UpdatePostRequestDTO updatePostRequestDTO) {
+    public String postModifyForm(@Valid UpdatePostRequestDTO updatePostRequestDTO) {
         Integer boardId = boardUpdateService.postUpdate(updatePostRequestDTO);
         return "redirect:/boards/free/views/" + String.valueOf(boardId);
     }

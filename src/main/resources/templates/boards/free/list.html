@@ -71,7 +71,7 @@
         </tbody>
     </table>
 
-    <div class="pagination">
+    <div th:if="dto.paginationDto.totalPage == 0" class="pagination">
         <span th:if="${dto.paginationDto.currentSection != 1}">
             <a class="btn btn-outline-primary" th:href="@{/boards/free/list(page=${dto.paginationDto.currentSectionPageBegin - 1}, regDateStart=${dto.regDateStart}, regDateEnd=${dto.regDateEnd}, categoryName=${dto.categoryName}, keyword=${dto.keyword})}">
                 &lt;
@@ -88,7 +88,7 @@
                 &gt;
             </a>
         </span>
-  
+        
         <a class="btn btn-outline-primary" th:href="@{/boards/free/list(page=${dto.paginationDto.totalPage}, regDateStart=${dto.regDateStart}, regDateEnd=${dto.regDateEnd}, categoryName=${dto.categoryName}, keyword=${dto.keyword})}" th:text="${dto.paginationDto.totalPage}"></a>
     </div>
 </body>

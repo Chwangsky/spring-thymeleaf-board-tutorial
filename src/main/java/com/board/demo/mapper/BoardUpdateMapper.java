@@ -41,4 +41,7 @@ public interface BoardUpdateMapper {
         @Update("Update board SET update_date = NOW() WHERE board_id = #{boardId}")
         void updateUpdateDate(@Param("boardId") int boardId);
 
+        @Select("SELECT file_dir FROM files WHERE files_id = #{fileId}")
+        String getDirByFileId(@Param("fileId") int fileId);
+
 }

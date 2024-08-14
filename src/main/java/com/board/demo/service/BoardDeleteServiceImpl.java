@@ -1,22 +1,34 @@
 package com.board.demo.service;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.board.demo.dto.request.delete.BoardDeleteRequestDTO;
+import com.board.demo.listener.FileDeleteEvent;
 import com.board.demo.mapper.BoardDeleteMapper;
 
 @Service
 public class BoardDeleteServiceImpl implements BoardDeleteService {
 
     private final BoardDeleteMapper mapper;
+    private final ApplicationEventPublisher eventPublisher;
 
-    public BoardDeleteServiceImpl(BoardDeleteMapper mapper) {
+    public BoardDeleteServiceImpl(BoardDeleteMapper mapper,
+            ApplicationEventPublisher eventPublisher) {
         this.mapper = mapper;
+        this.eventPublisher = eventPublisher;
     }
 
     @Override
+    @Transactional
     public ResponseEntity<?> deleteBoard(BoardDeleteRequestDTO boardDeleteRequestDTO) {
         Integer boardId = boardDeleteRequestDTO.getBoardId();
         String password = boardDeleteRequestDTO.getPassword();
@@ -29,6 +41,10 @@ public class BoardDeleteServiceImpl implements BoardDeleteService {
                     .body("Unauthorized: Incorrect password");
         }
 
+        List<Path> pathsToDelete = mapper.getAllDirsByBoardId(boardId).stream()
+                .map(strDir -> Paths.get(strDir))
+                .collect(Collectors.toList());
+
         Integer count = mapper.deleteUserById(boardId);
         if (count == 0) {
             // 삭제 실패 로직
@@ -36,7 +52,9 @@ public class BoardDeleteServiceImpl implements BoardDeleteService {
                     .body("Error: Failed to delete the board.");
         } else {
             // 삭제 성공 로직
+            eventPublisher.publishEvent(new FileDeleteEvent(pathsToDelete));
             return ResponseEntity.ok("Board deleted successfully.");
         }
+
     }
 }

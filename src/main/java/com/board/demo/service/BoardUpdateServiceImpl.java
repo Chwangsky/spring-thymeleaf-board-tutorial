@@ -1,20 +1,20 @@
 package com.board.demo.service;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import jakarta.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,6 +26,7 @@ import com.board.demo.entity.FileEntity;
 import com.board.demo.entity.FileInsertEntity;
 import com.board.demo.exception.FileWriteException;
 import com.board.demo.exception.PasswordNotMatchException;
+import com.board.demo.listener.FileDeleteEvent;
 import com.board.demo.mapper.BoardUpdateMapper;
 
 import lombok.extern.slf4j.Slf4j;
@@ -35,12 +36,20 @@ import lombok.extern.slf4j.Slf4j;
 public class BoardUpdateServiceImpl implements BoardUpdateService {
 
     private final BoardUpdateMapper mapper;
-    private final String uploadDirectory;
+    private final ApplicationEventPublisher eventPublisher;
 
-    public BoardUpdateServiceImpl(BoardUpdateMapper mapper,
-            @Value("${upload.directory}") String uploadDirectory) {
+    private final String uploadDirectory;
+    private final String delimiter;
+
+    public BoardUpdateServiceImpl(
+            BoardUpdateMapper mapper,
+            ApplicationEventPublisher applicationEventPublisher,
+            @Value("${upload.directory}") String uploadDirectory,
+            @Value("${file.delete.delimiter}") String fileDeleteDelimiter) {
         this.mapper = mapper;
         this.uploadDirectory = uploadDirectory;
+        this.delimiter = fileDeleteDelimiter;
+        this.eventPublisher = applicationEventPublisher;
     }
 
     @Override
@@ -77,20 +86,21 @@ public class BoardUpdateServiceImpl implements BoardUpdateService {
         List<FileEntity> fileEntities = mapper.selectFilesByBoardId(boardId);
 
         String filesToDeleteString = updatePostRequestDTO.getRemoveFiles();
-        log.info("0woo filesToDelete", filesToDeleteString);
+
+        List<Path> pathsToDelete = new ArrayList<>(); // 로컬에서 삭제할 경로들을 저장하기 위한 배열
 
         if (filesToDeleteString != null && !filesToDeleteString.isEmpty()) {
-            String[] filesToDelete = filesToDeleteString.split(","); // DELIMITER 상수로??
+            String[] filesToDelete = filesToDeleteString.split(delimiter);
             if (filesToDelete != null) {
                 for (String file : filesToDelete) {
                     if (!file.trim().isEmpty()) {
                         try {
                             Integer parsedFileId = Integer.parseInt(file.trim());
 
-                            // 1. DB에서 삭제
-                            mapper.deleteFileById(parsedFileId);
+                            String fileDir = mapper.getDirByFileId(parsedFileId);
+                            pathsToDelete.add(Paths.get(fileDir));
 
-                            // 로컬파일 삭제 로직 추가
+                            mapper.deleteFileById(parsedFileId);
 
                         } catch (NumberFormatException e) {
                             log.warn("파일 id 파싱 실패. 파일 id가 잘못 입력되었습니다. 로그를 확인해 주세요");
@@ -116,7 +126,7 @@ public class BoardUpdateServiceImpl implements BoardUpdateService {
                 // 디렉토리가 없으면 생성
                 Files.createDirectories(Paths.get(uploadDirectory));
 
-                // STUDY- 파일 저장 InputStream? Buffer 조사
+                // TODO 파일 저장 InputStream? Buffer 조사
                 try (InputStream inputStream = file.getInputStream()) {
                     Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
                 }
@@ -139,6 +149,14 @@ public class BoardUpdateServiceImpl implements BoardUpdateService {
 
         // update_date 갱신
         mapper.updateUpdateDate(boardId);
+
+        // 로컬 파일 삭제를 위한 이벤트 등록
+
+        fileEntities.stream().map(entity -> {
+            return entity.getFileDir();
+        }).collect(Collectors.toList());
+
+        eventPublisher.publishEvent(new FileDeleteEvent(pathsToDelete));
 
         return boardId;
 

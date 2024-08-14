@@ -29,8 +29,4 @@ public interface BoardSearchMapper {
         @Select("SELECT category_id as categoryId, name FROM category")
         List<CategoryIdNameEntity> findAllCategoryIdsAndNames();
 
-        // this is just for TEST -- and it works
-        // @Select("SELECT reg_date FROM board")
-        // List<LocalDateTime> getAllRegDates();
-
 }

@@ -4,7 +4,7 @@ import org.springframework.http.ResponseEntity;
 
 import com.board.demo.dto.request.delete.BoardDeleteRequestDTO;
 
-public interface BoardDeleteService {
+public interface DeleteService {
 
     ResponseEntity<?> deleteBoard(BoardDeleteRequestDTO boardDeleteRequestDTO);
 

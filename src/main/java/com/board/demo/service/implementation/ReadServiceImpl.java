@@ -1,4 +1,4 @@
-package com.board.demo.service;
+package com.board.demo.service.implementation;
 
 import java.util.List;
 
@@ -10,13 +10,14 @@ import com.board.demo.entity.BoardDetailEntity;
 import com.board.demo.entity.CommentEntity;
 import com.board.demo.entity.FileEntity;
 import com.board.demo.mapper.BoardReadMapper;
+import com.board.demo.service.BoardReadService;
 
 @Service
-public class BoardReadServiceImpl implements BoardReadService {
+public class ReadServiceImpl implements BoardReadService {
 
     private final BoardReadMapper mapper;
 
-    public BoardReadServiceImpl(BoardReadMapper mapper) {
+    public ReadServiceImpl(BoardReadMapper mapper) {
         this.mapper = mapper;
     }
 

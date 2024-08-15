@@ -1,4 +1,4 @@
-package com.board.demo.service;
+package com.board.demo.service.implementation;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -14,14 +14,15 @@ import org.springframework.transaction.annotation.Transactional;
 import com.board.demo.dto.request.delete.BoardDeleteRequestDTO;
 import com.board.demo.listener.FileDeleteEvent;
 import com.board.demo.mapper.BoardDeleteMapper;
+import com.board.demo.service.BoardDeleteService;
 
 @Service
-public class BoardDeleteServiceImpl implements BoardDeleteService {
+public class DeleteServiceImpl implements BoardDeleteService {
 
     private final BoardDeleteMapper mapper;
     private final ApplicationEventPublisher eventPublisher;
 
-    public BoardDeleteServiceImpl(BoardDeleteMapper mapper,
+    public DeleteServiceImpl(BoardDeleteMapper mapper,
             ApplicationEventPublisher eventPublisher) {
         this.mapper = mapper;
         this.eventPublisher = eventPublisher;

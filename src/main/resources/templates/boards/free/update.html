@@ -84,11 +84,6 @@
     <div class="container mt-5">
         <h2 class="mb-4">게시글 수정</h2>
 
-        <!-- 에러 메시지 출력 -->
-        <div th:if="${not #lists.isEmpty(errorMessage)}" class="alert alert-danger">
-            <span th:text="${errorMessage}"></span>
-        </div>
-
         <!-- 게시글 수정 폼 -->
         <form th:action="@{/boards/free/modify}" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
             <input type="hidden" name="boardId" th:value="${dto.boardId}">

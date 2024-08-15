@@ -1,4 +1,4 @@
-package com.board.demo.service;
+package com.board.demo.service.implementation;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,16 +15,17 @@ import org.springframework.stereotype.Service;
 
 import com.board.demo.entity.FileDownloadEntity;
 import com.board.demo.mapper.DownloadMapper;
+import com.board.demo.service.FileDownloadService;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-public class FileDownloadServiceImpl implements FileDownloadService {
+public class DownloadServiceImpl implements FileDownloadService {
 
     private final DownloadMapper mapper;
 
-    public FileDownloadServiceImpl(DownloadMapper mapper) {
+    public DownloadServiceImpl(DownloadMapper mapper) {
         this.mapper = mapper;
     }
 

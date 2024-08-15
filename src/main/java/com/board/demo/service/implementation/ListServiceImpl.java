@@ -1,4 +1,4 @@
-package com.board.demo.service;
+package com.board.demo.service.implementation;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,15 +14,16 @@ import com.board.demo.dto.response.list.PaginationDTO;
 import com.board.demo.entity.BoardSearchEntity;
 import com.board.demo.entity.CategoryIdNameEntity;
 import com.board.demo.mapper.BoardSearchMapper;
+import com.board.demo.service.BoardListService;
 
 @Service
-public class BoardListServiceImpl implements BoardListService {
+public class ListServiceImpl implements BoardListService {
 
         private final BoardSearchMapper mapper;
         private final int itemsPerPage;
         private final int pagePerSection;
 
-        public BoardListServiceImpl(
+        public ListServiceImpl(
                         BoardSearchMapper mapper,
                         @Value("${board.items-per-page}") int itemsPerPage,
                         @Value("${board.page-per-section}") int pagePerSection) {

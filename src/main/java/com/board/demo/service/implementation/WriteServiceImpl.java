@@ -1,4 +1,4 @@
-package com.board.demo.service;
+package com.board.demo.service.implementation;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -20,17 +20,18 @@ import com.board.demo.entity.CategoryIdNameEntity;
 import com.board.demo.entity.FileInsertEntity;
 import com.board.demo.exception.FileWriteException;
 import com.board.demo.mapper.BoardWriteMapper;
+import com.board.demo.service.BoardWriteService;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-public class BoardWriteServiceImpl implements BoardWriteService {
+public class WriteServiceImpl implements BoardWriteService {
 
     private final BoardWriteMapper mapper;
     private final String uploadDirectory;
 
-    public BoardWriteServiceImpl(
+    public WriteServiceImpl(
             BoardWriteMapper mapper,
             @Value("${upload.directory}") String uploadDirectory) {
         this.mapper = mapper;

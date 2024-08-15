@@ -1,4 +1,4 @@
-package com.board.demo.service;
+package com.board.demo.service.implementation;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,12 +28,13 @@ import com.board.demo.exception.FileWriteException;
 import com.board.demo.exception.PasswordNotMatchException;
 import com.board.demo.listener.FileDeleteEvent;
 import com.board.demo.mapper.BoardUpdateMapper;
+import com.board.demo.service.BoardUpdateService;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-public class BoardUpdateServiceImpl implements BoardUpdateService {
+public class UpdateServiceImpl implements BoardUpdateService {
 
     private final BoardUpdateMapper mapper;
     private final ApplicationEventPublisher eventPublisher;
@@ -41,7 +42,7 @@ public class BoardUpdateServiceImpl implements BoardUpdateService {
     private final String uploadDirectory;
     private final String delimiter;
 
-    public BoardUpdateServiceImpl(
+    public UpdateServiceImpl(
             BoardUpdateMapper mapper,
             ApplicationEventPublisher applicationEventPublisher,
             @Value("${upload.directory}") String uploadDirectory,

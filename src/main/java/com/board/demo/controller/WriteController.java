@@ -8,15 +8,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.board.demo.dto.request.write.BoardPostBoardRequestDTO;
 import com.board.demo.dto.response.write.BoardWriteResponseDTO;
-import com.board.demo.service.BoardWriteService;
+import com.board.demo.service.WriteService;
 
 @Controller
 @RequestMapping("/boards/free/write")
 public class WriteController {
 
-    public final BoardWriteService boardWriteService;
+    public final WriteService boardWriteService;
 
-    public WriteController(BoardWriteService boardWriteService) {
+    public WriteController(WriteService boardWriteService) {
         this.boardWriteService = boardWriteService;
     }
 

@@ -14,10 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.board.demo.dto.request.delete.BoardDeleteRequestDTO;
 import com.board.demo.listener.FileDeleteEvent;
 import com.board.demo.mapper.BoardDeleteMapper;
-import com.board.demo.service.BoardDeleteService;
+import com.board.demo.service.DeleteService;
 
 @Service
-public class DeleteServiceImpl implements BoardDeleteService {
+public class DeleteServiceImpl implements DeleteService {
 
     private final BoardDeleteMapper mapper;
     private final ApplicationEventPublisher eventPublisher;

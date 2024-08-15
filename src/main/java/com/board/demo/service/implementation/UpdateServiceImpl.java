@@ -28,13 +28,13 @@ import com.board.demo.exception.FileWriteException;
 import com.board.demo.exception.PasswordNotMatchException;
 import com.board.demo.listener.FileDeleteEvent;
 import com.board.demo.mapper.BoardUpdateMapper;
-import com.board.demo.service.BoardUpdateService;
+import com.board.demo.service.UpdateService;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-public class UpdateServiceImpl implements BoardUpdateService {
+public class UpdateServiceImpl implements UpdateService {
 
     private final BoardUpdateMapper mapper;
     private final ApplicationEventPublisher eventPublisher;
@@ -111,7 +111,7 @@ public class UpdateServiceImpl implements BoardUpdateService {
             }
         }
 
-        // 새로운 파일 DB에 정보저장 + 로컬에 저장
+        // 새로운 파일 DB에 정보저장
         MultipartFile[] newFiles = updatePostRequestDTO.getNewFiles();
         for (MultipartFile file : newFiles) {
             String originalFileName = file.getOriginalFilename();
@@ -152,7 +152,6 @@ public class UpdateServiceImpl implements BoardUpdateService {
         mapper.updateUpdateDate(boardId);
 
         // 로컬 파일 삭제를 위한 이벤트 등록
-
         fileEntities.stream().map(entity -> {
             return entity.getFileDir();
         }).collect(Collectors.toList());
@@ -160,7 +159,6 @@ public class UpdateServiceImpl implements BoardUpdateService {
         eventPublisher.publishEvent(new FileDeleteEvent(pathsToDelete));
 
         return boardId;
-
     }
 
 }

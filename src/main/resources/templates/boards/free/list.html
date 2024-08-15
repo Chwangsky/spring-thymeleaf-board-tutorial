@@ -62,8 +62,7 @@
                 <td th:text="${item.writer}"></td>
                 <td th:text="${item.views}"></td>
                 <td th:text="${item.regDate != null ? #temporals.format(item.regDate, 'yyyy-MM-dd HH:mm') : ''}"></td>
-                <td th:if="${item.upDate != item.regDate}" th:text="${item.updateDate != null ? #temporals.format(item.updateDate, 'yyyy-MM-dd HH:mm') : ''}"></td> <!-- added -->
-                <td th:if="${item.upDate == item.regDate}" th:text="-"></td> <!-- added -->
+                <td th:text="${item.updateDate != null && item.updateDate != item.regDate ? #temporals.format(item.updateDate, 'yyyy-MM-dd HH:mm') : '-'}"></td>
             </tr>
         </tbody>
     </table>

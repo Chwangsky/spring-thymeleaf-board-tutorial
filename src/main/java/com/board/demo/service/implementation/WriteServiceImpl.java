@@ -20,13 +20,13 @@ import com.board.demo.entity.CategoryIdNameEntity;
 import com.board.demo.entity.FileInsertEntity;
 import com.board.demo.exception.FileWriteException;
 import com.board.demo.mapper.BoardWriteMapper;
-import com.board.demo.service.BoardWriteService;
+import com.board.demo.service.WriteService;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-public class WriteServiceImpl implements BoardWriteService {
+public class WriteServiceImpl implements WriteService {
 
     private final BoardWriteMapper mapper;
     private final String uploadDirectory;

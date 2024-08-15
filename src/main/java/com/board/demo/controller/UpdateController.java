@@ -11,15 +11,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.board.demo.dto.request.update.UpdatePostRequestDTO;
 import com.board.demo.dto.response.update.UpdateResponseDTO;
-import com.board.demo.service.BoardUpdateService;
+import com.board.demo.service.UpdateService;
 
 @Controller
 @RequestMapping("/boards/free/modify")
 public class UpdateController {
 
-    final BoardUpdateService boardUpdateService;
+    final UpdateService boardUpdateService;
 
-    public UpdateController(BoardUpdateService boardUpdateService) {
+    public UpdateController(UpdateService boardUpdateService) {
         this.boardUpdateService = boardUpdateService;
     }
 

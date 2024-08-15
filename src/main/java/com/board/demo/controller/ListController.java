@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.board.demo.dto.request.list.BoardListRequestDTO;
 import com.board.demo.dto.response.list.BoardListResponseDTO;
-import com.board.demo.service.BoardListService;
+import com.board.demo.service.ListService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -16,9 +16,9 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/boards/free/list")
 public class ListController {
 
-    private final BoardListService boardListService;
+    private final ListService boardListService;
 
-    public ListController(BoardListService boardListService) {
+    public ListController(ListService boardListService) {
         this.boardListService = boardListService;
     }
 

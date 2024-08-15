@@ -11,15 +11,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.board.demo.dto.request.read.PostCommentRequestDTO;
 import com.board.demo.dto.response.read.BoardReadResponseDTO;
-import com.board.demo.service.BoardReadService;
+import com.board.demo.service.ReadService;
 
 @Controller
 @RequestMapping("/boards/free/views")
 public class ReadController {
 
-    private final BoardReadService boardReadService;
+    private final ReadService boardReadService;
 
-    public ReadController(BoardReadService boardReadService) {
+    public ReadController(ReadService boardReadService) {
         this.boardReadService = boardReadService;
     }
 

@@ -10,10 +10,10 @@ import com.board.demo.entity.BoardDetailEntity;
 import com.board.demo.entity.CommentEntity;
 import com.board.demo.entity.FileEntity;
 import com.board.demo.mapper.BoardReadMapper;
-import com.board.demo.service.BoardReadService;
+import com.board.demo.service.ReadService;
 
 @Service
-public class ReadServiceImpl implements BoardReadService {
+public class ReadServiceImpl implements ReadService {
 
     private final BoardReadMapper mapper;
 
